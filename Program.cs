@@ -7,9 +7,11 @@ namespace SpaceGame
         static void Main(string[] args)
         {
             Display console = new Display();
-            console.Write("Welcome to the Game", pauseText:true, tabText:true);
+            console.Draw("Hi");
+            console.Write("Welcome to the Game", pauseText:true, textIndent:5);
             string _startChoice = console.GetInput("Press [Yy] - Start\n[Nn] - Exit\n[Hh] - Help");
             console.Write(_startChoice);
+
         }
     }
 }
