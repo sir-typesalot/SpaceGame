@@ -35,7 +35,15 @@ namespace SpaceGame
          */
         public void Draw(string item)
         {
-            this.artist.Driver(1);
+            if (artist.artwork.Contains(item))
+            {
+                this.artist.Render(artist.artwork.IndexOf(item));
+            } else
+            {
+                // throw error
+                Console.WriteLine("Did not find Artwork");
+            }
+                
         }
         /** 
          * Method to write output to the console
@@ -61,7 +69,7 @@ namespace SpaceGame
                 foreach (char letter in text)
                 {
                     Console.Write(letter);
-                    Thread.Sleep(250);
+                    Thread.Sleep(200);
                 }
             } else
             {
@@ -76,23 +84,30 @@ namespace SpaceGame
         /**
          * Method to get user choice and draw art 
          * Args:
-         *  choice {int} number that user selects *Note: will change this to an enum?
+         *  choice {int} number that user selects 
          * Returns:
          *  None
          */
-        public void Driver(int choice)
+        public void Render(int choice)
         {
             switch(choice) {
-                case 1:
+                case 0:
                     this.gameLogo();
                     break;
-                case 2:
+                case 1:
                     this.endGameLogo();
                     break;
             }
         }
+        // List to show what art is available
+        // (Yes, an enum would be better, but here we are)
+        public List<string> artwork = new List<string>() { 
+            "Start_Game", "End_Game", "Xabat_Scene"
+        };
         private void gameLogo()
         {
+            // Newline to make sure picture is not messed up by left over lines
+            Console.WriteLine(" ");
             Console.WriteLine(@"   *     `   /\      *  ` .   ``.");
             Console.WriteLine(@"   `  . /---/||\---\    *  ,     `o");
             Console.WriteLine(@"*  .    \__/----\__/   *    .");
@@ -103,6 +118,7 @@ namespace SpaceGame
         }
         private void endGameLogo()
         {
+            Console.WriteLine(" ");
             Console.WriteLine(@"   *     `        x `    .   ``.");
             Console.WriteLine(@"   `  . \|/   ` _/|\_    `o");
             Console.WriteLine(@"*  .   --O--   (_| |_)   ");
