@@ -65,6 +65,8 @@ namespace SpaceGame
             console.Write("And thus he left...", pauseText: true, textIndent: 5);
 
             console.Draw("End_Game");
+            // test
+
         }
     }
 }
