@@ -12,6 +12,7 @@ namespace SpaceGame
             string _startChoice = console.GetInput("Press [Yy] - Start\n[Nn] - Exit\n[Hh] - Help");
             console.Write("And thus he left...", pauseText: true, textIndent: 5);
             console.Draw("End_Game");
+            // test
 
         }
     }
