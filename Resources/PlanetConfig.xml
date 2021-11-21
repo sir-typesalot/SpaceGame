@@ -1,24 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <root>
   <Planet name="Argon">
-    <info story="Born from the great comet strike 1 million years ago, this old planet is house to some of the galaxy's richest mines" />
-    <product name="Product2" />
+    <story value="Born from the great comet strike 1 million years ago, this old planet is house to some of the galaxy's richest mines" />
   </Planet>
   <Planet name="Plutonius">
-    <info story="Story" />
-    <product name="Product4" />
+    <story value="Home to a vast array of creatures that have evolved over millions of years, this planet's economy thrives on it's wilderness" />
   </Planet>
   <Planet name="Andromedian">
-    <info story="Story" />
-    <product name="Product4" />
+    <story value="Still burning from the Great Comet collision, the innovative residents found a way to turn the smoldering ruins of their old society into a booming business." />
   </Planet>
   <Planet name="Zargos">
-    <info story="Story" />
-    <product name="Product4" />
+    <story value="Story" />
   </Planet>
   <Planet name="Novius">
-    <info story="Story" />
-    <product name="Product4" />
+    <story value="Home to Xabat the ruthless. This planet is the most technologically advanced in the galaxy, funding many expeditions into the far corners of space." />
   </Planet>
 </root>
 

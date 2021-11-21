@@ -56,31 +56,16 @@ namespace SpaceGame
          */
         public Galaxy(string filePath)
         {
-            this.fileLoader(filePath);
+            Utils tools = new Utils();
+            List<Dictionary<string,string>> planetsList = tools.ReadXMLFile(filePath, "Planet");
+            foreach (Dictionary<string, string> planet in planetsList)
+            {
+                this.planetsInGalaxy.Add(planet["name"], new Planet(planet["name"], planet["story"]));
+            }
         }
         // List of planets in the Galaxy
-        public List<Planet> planetsInGalaxy = new List<Planet>();
+        public Dictionary<string, Planet> planetsInGalaxy = new Dictionary<string, Planet>();
         // Property to show which planet the player is on currently
         public string CurrentPlanet { get; set; }
-
-        private void fileLoader(string filePath)
-        {
-            StringBuilder result = new StringBuilder();
-            foreach (XElement level1Element in XElement.Load(filePath).Elements("Planet"))
-            {
-                string story = "";
-                string name = level1Element.Attribute("name").Value;
-                foreach (XElement level2Element in level1Element.Elements("info"))
-                {
-                    story = level2Element.Attribute("story").Value;
-                }
-                this.planetsInGalaxy.Add(new Planet(name, story));
-            }
-            
-            //foreach (Planet planet in planetsInGalaxy)
-            //{
-            //    Console.WriteLine(planet.Name + planet.Story);
-            //}
-        }
     }
 }
