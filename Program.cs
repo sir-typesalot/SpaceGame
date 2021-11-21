@@ -60,11 +60,13 @@ namespace SpaceGame
             // Should we create a property in the Galaxy Class to handle this? - What do you guys think?
             int timesTraveled = 0;
             Planet CurrentPlanet = galaxy.planetsInGalaxy["Argon"];
+            int planetChoice = 1;
             //Loop to limit how many planets player can travel to.
             while (timesTraveled <= 15)
             {
                 
                 string currentAction = "1";
+                
 
                 if (timesTraveled == 0)
                 {
@@ -75,7 +77,8 @@ namespace SpaceGame
 
                     console.Write(story, textIndent: 3);
 
-                } else
+                } 
+                else
                 {
                     //Pick a planet to travel to.
                     console.Write(" Pick a planet to travel to");
@@ -87,11 +90,27 @@ namespace SpaceGame
                         planetRoster += planet;
                         planetNum++;
                     }
-                    // Get planet selection from user and convert to Int
-                    string travelPlanet = console.GetInput(planetRoster);
-                    int userChoice = Convert.ToInt32(travelPlanet);
-                    // Check if int is in bounds
-                    int planetChoice = userChoice < planetNum ? userChoice: 0;
+
+                    int userChoice =1;
+
+                    //Doesn't allow player to travel to the current planet
+                    do
+                    {
+                        console.Write("\n Traveling to your current planet is forbidden");
+
+                            // Get planet selection from user and convert to Int
+
+                            string travelPlanet = console.GetInput(planetRoster);
+
+                            userChoice = Convert.ToInt32(travelPlanet);
+
+                    }
+                    while (userChoice == planetChoice);
+
+
+                    planetChoice = userChoice;
+
+
                     // Display story for selected planet
                     // Need to reset the galaxy.CurrentPlanet to the chosen one
                     switch (planetChoice)
