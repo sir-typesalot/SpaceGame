@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
+using System.IO;
+using System.Text;
 
 namespace SpaceGame
 {
@@ -49,23 +52,19 @@ namespace SpaceGame
         /**
          * Constructor for the Galaxy class
          * Params:
-         *  names {string[]} list of names
-         *  story {string[]} list of planet stories
-         *  numOfPlanets {int} number of planets for the Galaxy
+         *  filaPath {string} the path to the file that holds the info for the planets
          */
-        public Galaxy(string[] names, string[] story, int numOfPlanets = 1)
+        public Galaxy(string filePath)
         {
-            // Check that both lists and num of planets match
-            if (names.Length != story.Length && names.Length != numOfPlanets) 
-                throw new Exception("Array Mismatch");
-            // Createnew planets with names and stories. Add to the list of Planets
-            for (int i=0; i < numOfPlanets; i++)
+            Utils tools = new Utils();
+            List<Dictionary<string,string>> planetsList = tools.ReadXMLFile(filePath, "Planet");
+            foreach (Dictionary<string, string> planet in planetsList)
             {
-                this.planetsInGalaxy.Add(new Planet(names[i], story[i]));
+                this.planetsInGalaxy.Add(planet["name"], new Planet(planet["name"], planet["story"]));
             }
         }
         // List of planets in the Galaxy
-        public List<Planet> planetsInGalaxy = new List<Planet>();
+        public Dictionary<string, Planet> planetsInGalaxy = new Dictionary<string, Planet>();
         // Property to show which planet the player is on currently
         public string CurrentPlanet { get; set; }
     }
