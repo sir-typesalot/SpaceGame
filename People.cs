@@ -35,16 +35,17 @@ namespace SpaceGame
         }
     }
 
-    class EndGameBoss: Person
-    {
-        public bool isAppeased = false;
-        public bool finalCheck()
-        {
-            return false;
-        }
-        public bool crystalCheck()
-        {
-            return false;
-        }
-    }
+    // I think we may not need this class, leaving it commented though
+    //class EndGameBoss: Person
+    //{
+    //    public bool isAppeased = false;
+    //    public bool finalCheck()
+    //    {
+    //        return false;
+    //    }
+    //    public bool crystalCheck()
+    //    {
+    //        return false;
+    //    }
+    //}
 }

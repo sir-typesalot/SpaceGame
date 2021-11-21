@@ -7,6 +7,7 @@ namespace SpaceGame
         static void Main(string[] args)
         {
             Display console = new Display();
+            Galaxy galaxy = new Galaxy(@"..\..\..\Resources\PlanetConfig.xml");
 
             console.Draw("Start_Game");
 
@@ -24,12 +25,17 @@ namespace SpaceGame
                 //Exit game.
                 if (_startChoice == "n")
                 {
-                    console.Write("exit");//placeholder
+                    // Output and then console will exit
+                    console.Write("Thank you for Playing", pauseText:true, textIndent:5);
+                    Environment.Exit(0);
                 }
                 //Display help.
                 else if (_startChoice == "h")
                 {
-                    console.Write("help");//placeholder
+                    // Simple Help Dialog
+                    console.Write(
+                    "\nTo play, press Y/y." +
+                    "\nThe objective of the game is to find the crystal and trade it to Xabat before time runs out");
                 }
             }
 
@@ -39,7 +45,7 @@ namespace SpaceGame
 
             //ALLOW PLAYER TO BUY ITEMS AT FIRST PLANET
 
-
+            // Should we create a property in the Galaxy Class to handle this? - What do you guys think?
             int timesTraveled = 0;
             //Loop to limit how many planets player can travel to.
             while (timesTraveled <= 15)
