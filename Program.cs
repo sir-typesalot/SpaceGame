@@ -9,9 +9,9 @@ namespace SpaceGame
         {
             Display console = new Display();
             Galaxy galaxy = new Galaxy(@"..\..\..\Resources\PlanetConfig.xml");
+            Player newPlayer = new Player();
 
             console.Draw("Start_Game");
-
             console.Write("Welcome to the Game", pauseText:true, textIndent:5);
 
             string _startChoice = "1";
@@ -37,9 +37,12 @@ namespace SpaceGame
                     console.Write(
                     "\nTo play, press Y/y." +
                     "\nThe objective of the game is to find the crystal and trade it to Xabat before time runs out");
-                    console.Write("Press Q/q at any time to quit the game...");
+                    console.Write("Press X/x at any time to quit the game...");
                 }
             }
+
+            string playerName = console.GetInput("Enter a name for your player: ");
+            newPlayer.Name = playerName;
 
             // Story Intro
             // Should probably migrate this to a file?
@@ -55,7 +58,7 @@ namespace SpaceGame
                 "these at one of the outposts on Argon’s moons. Apparently there was a dealer that could" +
                 "\nprocure some, but only to the highest bidders. Whatever the cost, Aster knew they had" +
                 " no\noption, for his life was dependent on these crystals and he would have to do " +
-                "whatever it takes to\nget them, before it’s too late…", textIndent:5);
+                "whatever it takes to\nget them, before it’s too late…");
 
             // Should we create a property in the Galaxy Class to handle this? - What do you guys think?
             int timesTraveled = 0;
@@ -67,7 +70,6 @@ namespace SpaceGame
                 
                 string currentAction = "1";
                 
-
                 if (timesTraveled == 0)
                 {
                     string story = CurrentPlanet.Story;
@@ -143,8 +145,36 @@ namespace SpaceGame
 
                 while (currentAction != "p")
                 {
-                    currentAction = console.GetInput(
-                        "Enter\n [Bb] - Buy\n [Ss] - Sell\n [Pp] - Travel to a new planet");
+                    currentAction = console.GetInput("Enter\n [Bb] - Buy\n [Ss] - Sell\n [Pp] - Travel to a new planet");
+                    if (currentAction.ToLower() == "b")
+                    {
+                        // Need logic to interact with planet and trader on planet
+                    } else if (currentAction.ToLower() == "s")
+                    {
+                        
+                        if (newPlayer.Inventory != null && newPlayer.Inventory.Count > 0)
+                        {
+                            console.Write("Which item(s) do you want to sell?", textIndent:5);
+                            for (int i=0; i < newPlayer.Inventory.Count; i++)
+                            {
+                                console.Write($"{i} - {newPlayer.Inventory[i]}");
+                            }
+                        } else
+                        {
+                            console.Write("You don't have aything to sell! Try getting some items..");
+                        }
+
+                    } else if (currentAction.ToLower() == "x")
+                    {
+                        // We can implement logic that will confirm if the user wants to quit
+                        // This should do for now though
+                        console.Write("Thank you for playing!", textIndent: 5);
+                        Environment.Exit(0);
+
+                    } else
+                    {
+                        console.Write("Input not understood, please try again or press [X/x] to Quit", textIndent: 5);
+                    }
                 }
 
                 timesTraveled++;
