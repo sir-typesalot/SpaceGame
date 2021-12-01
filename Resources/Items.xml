@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<root>
+	<Planet name="Argon   ">
+        <Coal value="20" />
+		<Ice value="10" />
+		<Orichalcum value="10" />
+		<Wood value="10" />
+		<Hide value="10" />
+    </Planet>
+	
+    <Planet name="Plutonius">
+		<Coal value="10" />
+		<Ice value="20" />
+		<Orichalcum value="10" />
+		<Wood value="10" />
+		<Hide value="10" />
+    </Planet>
+	
+    <Planet name="Andromedian">
+		<Coal value="10" />
+		<Ice value="10" />
+		<Orichalcum value="20" />
+		<Wood value="10" />
+		<Hide value="10" />
+    </Planet>
+	
+    <Planet name="Zargos  ">
+		<Coal value="10" />
+		<Ice value="10" />
+		<Orichalcum value="10" />
+		<Wood value="20" />
+		<Hide value="10" />
+    </Planet>
+	
+    <Planet name="Novius  ">
+		<Coal value="10" />
+		<Ice value="10" />
+		<Orichalcum value="10" />
+		<Wood value="10" />
+		<Hide value="20" />
+    </Planet>
+</root>
+

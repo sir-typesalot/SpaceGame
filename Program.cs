@@ -11,6 +11,9 @@ namespace SpaceGame
             Galaxy galaxy = new Galaxy(@"..\..\..\Resources\PlanetConfig.xml");
             Player newPlayer = new Player();
 
+            //newPlayer.Inventory.Add("Coal");
+            //newPlayer.Amount.Add(10);
+
             console.Draw("Start_Game");
             console.Write("Welcome to the Game", pauseText:true, textIndent:5);
 
@@ -62,7 +65,7 @@ namespace SpaceGame
 
             // Should we create a property in the Galaxy Class to handle this? - What do you guys think?
             int timesTraveled = 0;
-            Planet CurrentPlanet = galaxy.planetsInGalaxy["Argon"];
+            Planet CurrentPlanet = galaxy.planetsInGalaxy["Argon   "];
             int planetChoice = 1;
             //Loop to limit how many planets player can travel to.
             while (timesTraveled <= 15)
@@ -118,7 +121,7 @@ namespace SpaceGame
                     switch (planetChoice)
                     {
                         case 1:
-                            CurrentPlanet = galaxy.planetsInGalaxy["Argon"];
+                            CurrentPlanet = galaxy.planetsInGalaxy["Argon   "];
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 2:
@@ -130,11 +133,11 @@ namespace SpaceGame
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 4:
-                            CurrentPlanet = galaxy.planetsInGalaxy["Zargos"];
+                            CurrentPlanet = galaxy.planetsInGalaxy["Zargos  "];
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 5:
-                            CurrentPlanet = galaxy.planetsInGalaxy["Novius"];
+                            CurrentPlanet = galaxy.planetsInGalaxy["Novius  "];
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         default:
@@ -148,10 +151,34 @@ namespace SpaceGame
                     currentAction = console.GetInput("Enter\n [Bb] - Buy\n [Ss] - Sell\n [Pp] - Travel to a new planet");
                     if (currentAction.ToLower() == "b")
                     {
-                        // Need logic to interact with planet and trader on planet
-                    } else if (currentAction.ToLower() == "s")
+                        int currentAmount;
+                        int currentPrice;
+                        string currentItem;
+                        do
+                        {
+                            currentAmount = 0;
+                            currentPrice = 0;
+                            currentItem = "";
+
+                            // Need logic to interact with planet and trader on planet
+                            console.Write("Enter the name of the item you would like to buy. \nYou can't spend more money than you have. \nYou have " + newPlayer.money + " units.\n");
+                            foreach (var item in ) // ADD XML DICTIONARY FOR ITEMS HERE
+                            {
+                                console.Write(item.Key + "\t\t" + item.Value);
+                            }
+
+                            console.GetInput(currentItem);
+
+
+
+
+
+
+                        }
+                        while (newPlayer.money < currentAmount * currentPrice);
+                    }
+                    else if (currentAction.ToLower() == "s")
                     {
-                        
                         if (newPlayer.Inventory != null && newPlayer.Inventory.Count > 0)
                         {
                             console.Write("Which item(s) do you want to sell?", textIndent:5);
@@ -159,19 +186,22 @@ namespace SpaceGame
                             {
                                 console.Write($"{i} - {newPlayer.Inventory[i]}");
                             }
-                        } else
+                        } 
+                        else
                         {
                             console.Write("You don't have aything to sell! Try getting some items..");
                         }
 
-                    } else if (currentAction.ToLower() == "x")
+                    } 
+                    else if (currentAction.ToLower() == "x")
                     {
                         // We can implement logic that will confirm if the user wants to quit
                         // This should do for now though
                         console.Write("Thank you for playing!", textIndent: 5);
                         Environment.Exit(0);
 
-                    } else
+                    } 
+                    else
                     {
                         console.Write("Input not understood, please try again or press [X/x] to Quit", textIndent: 5);
                     }
