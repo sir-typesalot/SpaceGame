@@ -207,10 +207,15 @@ namespace SpaceGame
                         if (newPlayer.Inventory != null && newPlayer.Inventory.Count > 0)
                         {
                             console.Write("Which item(s) do you want to sell?", textIndent:5);
-                            for (int i=0; i < newPlayer.Inventory.Count; i++)
+                            for (int i=1; i < newPlayer.Inventory.Count; i++)
                             {
                                 console.Write($"{i} - {newPlayer.Inventory[i]}");
                             }
+
+
+
+
+
                         } 
                         else
                         {
