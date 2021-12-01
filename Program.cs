@@ -9,7 +9,6 @@ namespace SpaceGame
         {
             Display console = new Display();
             Galaxy galaxy = new Galaxy(@"..\..\..\Resources\PlanetConfig.xml");
-            Player newPlayer = new Player();
 
             console.Draw("Start_Game");
             console.Write("Welcome to the Game", pauseText:true, textIndent:5);
@@ -42,7 +41,9 @@ namespace SpaceGame
             }
 
             string playerName = console.GetInput("Enter a name for your player: ");
-            newPlayer.Name = playerName;
+            Player newPlayer = new Player(playerName);
+
+            newPlayer.Inventory.Add("test");
 
             // Story Intro
             // Should probably migrate this to a file?

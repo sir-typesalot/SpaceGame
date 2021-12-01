@@ -6,7 +6,7 @@ namespace SpaceGame
     class Person
     {
         private int money = 0;
-        public List<string> Inventory { get; set; }
+        public List<string> Inventory = new List<string>();
         public string Name { get; set; }
         public int SellItem(string item, int price)
         {
@@ -26,8 +26,12 @@ namespace SpaceGame
         }
     }
 
-    class Player: Person
+    class Player : Person
     {
+        public Player(string name)
+        {
+            this.Name = name;
+        }
         public bool hasCrystal = false;
         public int travel()
         {
