@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <root>
-	<Planet name="Argon   ">
+	<Planet name="Argon">
         <Coal value="20" />
 		<Ice value="10" />
 		<Orichalcum value="10" />
@@ -24,7 +24,7 @@
 		<Hide value="10" />
     </Planet>
 	
-    <Planet name="Zargos  ">
+    <Planet name="Zargos">
 		<Coal value="10" />
 		<Ice value="10" />
 		<Orichalcum value="10" />
@@ -32,7 +32,7 @@
 		<Hide value="10" />
     </Planet>
 	
-    <Planet name="Novius  ">
+    <Planet name="Novius">
 		<Coal value="10" />
 		<Ice value="10" />
 		<Orichalcum value="10" />

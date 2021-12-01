@@ -121,7 +121,7 @@ namespace SpaceGame
                     switch (planetChoice)
                     {
                         case 1:
-                            CurrentPlanet = galaxy.planetsInGalaxy["Argon   "];
+                            CurrentPlanet = galaxy.planetsInGalaxy["Argon"];
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 2:
@@ -133,11 +133,11 @@ namespace SpaceGame
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 4:
-                            CurrentPlanet = galaxy.planetsInGalaxy["Zargos  "];
+                            CurrentPlanet = galaxy.planetsInGalaxy["Zargos"];
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 5:
-                            CurrentPlanet = galaxy.planetsInGalaxy["Novius  "];
+                            CurrentPlanet = galaxy.planetsInGalaxy["Novius"];
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         default:
