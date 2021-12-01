@@ -14,21 +14,44 @@ namespace SpaceGame
             return result;
         }
 
-        public List<Dictionary<string,string>> ReadXMLFile(string filePath, string elementTag)
+        public List<Dictionary<string,string>> ReadPlanetXMLFile(string elementTag, bool getItems=false)
         {
             List<Dictionary<string, string>> result = new List<Dictionary<string, string>>();
             
-            foreach (XElement level1Element in XElement.Load(filePath).Elements(elementTag))
+            if (getItems)
             {
-                Dictionary<string, string> planet = new Dictionary<string, string>();
-                planet.Add("name", level1Element.Attribute("name").Value);
-                foreach (XElement level2Element in level1Element.Elements())
+                string filePath = @"..\..\..\Resources\Items.xml";
+                foreach (XElement level1Element in XElement.Load(filePath).Elements(elementTag))
                 {
-                    planet.Add(level2Element.Name.ToString(), level2Element.Attribute("value").Value);
+                    Dictionary<string, string> planet = new Dictionary<string, string>();
+                    planet.Add("name", level1Element.Attribute("name").Value);
+                    foreach (XElement level2Element in level1Element.Elements())
+                    {
+                        planet.Add(level2Element.Name.ToString(), level2Element.Attribute("value").Value);
+                    }
+                    result.Add(planet);
                 }
-                result.Add(planet);
+
+            } else
+            {
+                string filePath = @"..\..\..\Resources\PlanetConfig.xml";
+                foreach (XElement level1Element in XElement.Load(filePath).Elements(elementTag))
+                {
+                    Dictionary<string, string> planet = new Dictionary<string, string>();
+                    planet.Add("name", level1Element.Attribute("name").Value);
+                    foreach (XElement level2Element in level1Element.Elements())
+                    {
+                        planet.Add(level2Element.Name.ToString(), level2Element.Attribute("value").Value);
+                    }
+                    result.Add(planet);
+                }
             }
+            
             return result;
         }
+        //public List<Dictionary<string, string>> ReadItemsXMLFile(string filePath, string elementTag)
+        //{
+
+        //}
     }
 }

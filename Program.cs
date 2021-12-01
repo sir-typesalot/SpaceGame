@@ -8,7 +8,8 @@ namespace SpaceGame
         static void Main(string[] args)
         {
             Display console = new Display();
-            Galaxy galaxy = new Galaxy(@"..\..\..\Resources\PlanetConfig.xml");
+            Galaxy galaxy = new Galaxy();
+            Utils tools = new Utils();
 
             //newPlayer.Inventory.Add("Coal");
             //newPlayer.Amount.Add(10);
@@ -66,7 +67,7 @@ namespace SpaceGame
 
             // Should we create a property in the Galaxy Class to handle this? - What do you guys think?
             int timesTraveled = 0;
-            Planet CurrentPlanet = galaxy.planetsInGalaxy["Argon   "];
+            Planet CurrentPlanet = galaxy.planetsInGalaxy["Argon"];
             int planetChoice = 1;
             //Loop to limit how many planets player can travel to.
             while (timesTraveled <= 15)
@@ -102,7 +103,7 @@ namespace SpaceGame
                     //Doesn't allow player to travel to the current planet
                     do
                     {
-                        console.Write("\n Traveling to your current planet is forbidden");
+                            console.Write("\n Traveling to your current planet is forbidden");
 
                             // Get planet selection from user and convert to Int
 
@@ -113,9 +114,7 @@ namespace SpaceGame
                     }
                     while (userChoice == planetChoice);
 
-
                     planetChoice = userChoice;
-
 
                     // Display story for selected planet
                     // Need to reset the galaxy.CurrentPlanet to the chosen one
@@ -160,20 +159,19 @@ namespace SpaceGame
                             currentAmount = 0;
                             currentPrice = 0;
                             currentItem = "";
-
+                            // Call util method to read file. set getItems to true to read from items.xml
+                            List<Dictionary<string, string>> itemsList = tools.ReadPlanetXMLFile("Planet", getItems: true);
                             // Need logic to interact with planet and trader on planet
                             console.Write("Enter the name of the item you would like to buy. \nYou can't spend more money than you have. \nYou have " + newPlayer.money + " units.\n");
-                            foreach (var item in ) // ADD XML DICTIONARY FOR ITEMS HERE
+                            // ItemsList[0] -> Argon
+                            // We'll need to get logic, using the planetchoice var (line 121)
+                            // To figure out which planet's items to show
+                            foreach (var item in itemsList[0])
                             {
                                 console.Write(item.Key + "\t\t" + item.Value);
                             }
 
                             console.GetInput(currentItem);
-
-
-
-
-
 
                         }
                         while (newPlayer.money < currentAmount * currentPrice);

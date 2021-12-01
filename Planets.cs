@@ -54,10 +54,11 @@ namespace SpaceGame
          * Params:
          *  filaPath {string} the path to the file that holds the info for the planets
          */
-        public Galaxy(string filePath)
+        public Galaxy()
         {
             Utils tools = new Utils();
-            List<Dictionary<string,string>> planetsList = tools.ReadXMLFile(filePath, "Planet");
+            // Set getItems to false so it loads from the PlanetConfig file
+            List<Dictionary<string,string>> planetsList = tools.ReadPlanetXMLFile("Planet", getItems:false);
             foreach (Dictionary<string, string> planet in planetsList)
             {
                 this.planetsInGalaxy.Add(planet["name"], new Planet(planet["name"], planet["story"]));

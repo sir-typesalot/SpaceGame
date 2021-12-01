@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <root>
 	<Planet name="Argon">
-        <Coal value="20" />
+    <Coal value="20" />
 		<Ice value="10" />
 		<Orichalcum value="10" />
 		<Wood value="10" />
