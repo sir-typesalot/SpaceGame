@@ -5,7 +5,7 @@ namespace SpaceGame
 {
     class Person
     {
-        public int money = 50;
+        public int money = 1000;
         public List<int> Amount { get; set; }
         public List<string> Inventory = new List<string>();
         public string Name { get; set; }

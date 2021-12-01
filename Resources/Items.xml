@@ -1,43 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<!--Prime sell order: Argon > Zargos > Novius > Andromedian > Plutonus > Argon....-->
+<!--Each planet has a produce, which can be bought at a lower price and a prime import, which is bought at a higher price.-->
+<!--Profit can be made by not finding the prime trades, but will struggle to win the game due to lack of money	.-->
+
 <root>
 	<Planet name="Argon">
-    <Coal value="20" />
-		<Ice value="10" />
-		<Orichalcum value="10" />
-		<Wood value="10" />
-		<Hide value="10" />
+		<Durasteel value="135" />
+		<Crystalline value="330" />
+		<Carbonite value="180" />
+		<Leviathan value="190" />
+		<Nanochip value="210" />
     </Planet>
 	
     <Planet name="Plutonius">
-		<Coal value="10" />
-		<Ice value="20" />
-		<Orichalcum value="10" />
-		<Wood value="10" />
-		<Hide value="10" />
+		<Durasteel value="190" />
+		<Crystalline value="140" />
+		<Carbonite value="310" />
+		<Leviathan value="210" />
+		<Nanochip value="180" />
     </Planet>
 	
     <Planet name="Andromedian">
-		<Coal value="10" />
-		<Ice value="10" />
-		<Orichalcum value="20" />
-		<Wood value="10" />
-		<Hide value="10" />
+		<Durasteel value="210" />
+		<Crystalline value="180" />
+		<Carbonite value="145" />
+		<Leviathan value="190" />
+		<Nanochip value="320" />
     </Planet>
 	
     <Planet name="Zargos">
-		<Coal value="10" />
-		<Ice value="10" />
-		<Orichalcum value="10" />
-		<Wood value="20" />
-		<Hide value="10" />
+		<Durasteel value="310" />
+		<Crystalline value="210" />
+		<Carbonite value="180" />
+		<Leviathan value="155" />
+		<Nanochip value="190" />
     </Planet>
 	
     <Planet name="Novius">
-		<Coal value="10" />
-		<Ice value="10" />
-		<Orichalcum value="10" />
-		<Wood value="10" />
-		<Hide value="20" />
+		<Durasteel value="190" />
+		<Crystalline value="180" />
+		<Carbonite value="210" />
+		<Leviathan value="350" />
+		<Nanochip value="150" />
     </Planet>
 </root>
-

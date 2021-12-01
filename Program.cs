@@ -11,9 +11,6 @@ namespace SpaceGame
             Galaxy galaxy = new Galaxy();
             Utils tools = new Utils();
 
-            //newPlayer.Inventory.Add("Coal");
-            //newPlayer.Amount.Add(10);
-
             console.Draw("Start_Game");
             console.Write("Welcome to the Game", pauseText:true, textIndent:5);
 
@@ -51,30 +48,31 @@ namespace SpaceGame
 
             // Story Intro
             // Should probably migrate this to a file?
-            console.Write("In a galaxy far away, on the planet of Argon, a meteorite-iron trader Aster\n" +
-                "miscalculated his spacecraft’s entry to the planet’s belt and is now left with a wrecked"+
-                " ship.\nA ship is not that hard to recover from, if only it hadn’t been owned by the" +
-                "galaxy’s most feared\nship lender - Xabat. Aster knew they were in trouble. It was only" +
+            console.Write("\nIn a galaxy far away, on the planet of Argon, a meteorite-iron trader "+ playerName + "\n" +
+                "miscalculated their spacecraft’s entry to the planet’s belt and is now left with a wrecked"+
+                " ship.\nA ship is not that hard to recover from, if only it hadn’t been owned by the " +
+                "galaxy’s most feared\nship lender - Xabat. " + playerName + " knew they were in trouble. It was only" +
                 " a matter of time before Xabat\nheard of the news, 1 galactic day exactly. Once he did," +
                 " there was no escape. No place was safe\nfrom Xabat, for he had contacts and bounty" +
                 "hunters throughout the galaxy, on every planet, on\nevery outpost. A rumor was " +
                 "circulating that there was one thing that Xabat liked more than his\nships, supernova" +
-                " crystals, crystals that are found in the debris of an exploded star. Aster\nheard of" +
+                " crystals, crystals that are found in the debris of an exploded star. "+ playerName + "\nheard of " +
                 "these at one of the outposts on Argon’s moons. Apparently there was a dealer that could" +
-                "\nprocure some, but only to the highest bidders. Whatever the cost, Aster knew they had" +
-                " no\noption, for his life was dependent on these crystals and he would have to do " +
-                "whatever it takes to\nget them, before it’s too late…");
+                "\nprocure some, but only to the highest bidders. Whatever the cost, "+ playerName + " knew they had" +
+                " no\noption, for their life was dependent on these crystals and they would have to do " +
+                "whatever it takes to\nget them, before it’s too late...\n");
 
             // Should we create a property in the Galaxy Class to handle this? - What do you guys think?
             int timesTraveled = 0;
             Planet CurrentPlanet = galaxy.planetsInGalaxy["Argon"];
             int planetChoice = 1;
             //Loop to limit how many planets player can travel to.
-            while (timesTraveled <= 15)
+            while (timesTraveled <= 9)
             {
                 
                 string currentAction = "1";
-                
+                int userChoice = 1;
+
                 if (timesTraveled == 0)
                 {
                     string story = CurrentPlanet.Story;
@@ -82,8 +80,9 @@ namespace SpaceGame
                     CurrentPlanet.CheckCrystalMan();
                     galaxy.CurrentPlanet = CurrentPlanet.Name;
 
-                    console.Write(story, textIndent: 3);
+                    console.Write("Current planet : " + CurrentPlanet.Name);
 
+                    console.Write(story, textIndent: 3);
                 } 
                 else
                 {
@@ -97,8 +96,6 @@ namespace SpaceGame
                         planetRoster += planet;
                         planetNum++;
                     }
-
-                    int userChoice =1;
 
                     //Doesn't allow player to travel to the current planet
                     do
@@ -122,22 +119,27 @@ namespace SpaceGame
                     {
                         case 1:
                             CurrentPlanet = galaxy.planetsInGalaxy["Argon"];
+                            console.Write("\nCurrent planet : " + CurrentPlanet.Name);
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 2:
                             CurrentPlanet = galaxy.planetsInGalaxy["Plutonius"];
+                            console.Write("\nCurrent planet : " + CurrentPlanet.Name);
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 3:
                             CurrentPlanet = galaxy.planetsInGalaxy["Andromedian"];
+                            console.Write("\nCurrent planet : " + CurrentPlanet.Name);
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 4:
                             CurrentPlanet = galaxy.planetsInGalaxy["Zargos"];
+                            console.Write("\nCurrent planet : " + CurrentPlanet.Name);
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 5:
                             CurrentPlanet = galaxy.planetsInGalaxy["Novius"];
+                            console.Write("\nCurrent planet : " + CurrentPlanet.Name);
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         default:
@@ -145,36 +147,60 @@ namespace SpaceGame
                             break;
                     }
                 }
-
+                
                 while (currentAction != "p")
                 {
                     currentAction = console.GetInput("Enter\n [Bb] - Buy\n [Ss] - Sell\n [Pp] - Travel to a new planet");
                     if (currentAction.ToLower() == "b")
                     {
-                        int currentAmount;
-                        int currentPrice;
+                        int total;
+                        int amount;
+                        string currentAmount;
+                        int price;
+                        string currentPrice;
                         string currentItem;
                         do
                         {
-                            currentAmount = 0;
-                            currentPrice = 0;
+                            total = 0;
+                            amount = 0;
+                            currentAmount = "";
+                            price = 0;
+                            currentPrice = "";
                             currentItem = "";
                             // Call util method to read file. set getItems to true to read from items.xml
                             List<Dictionary<string, string>> itemsList = tools.ReadPlanetXMLFile("Planet", getItems: true);
                             // Need logic to interact with planet and trader on planet
-                            console.Write("Enter the name of the item you would like to buy. \nYou can't spend more money than you have. \nYou have " + newPlayer.money + " units.\n");
+                            console.Write("\nEnter the name of the item you would like to buy. \nYou can't spend more money than you have. \nYou have " + newPlayer.money + " units.\n");
                             // ItemsList[0] -> Argon
-                            // We'll need to get logic, using the planetchoice var (line 121)
-                            // To figure out which planet's items to show
-                            foreach (var item in itemsList[0])
+                            foreach (var item in itemsList[userChoice - 1])
                             {
                                 console.Write(item.Key + "\t\t" + item.Value);
                             }
 
-                            console.GetInput(currentItem);
+                            //currentItem = console.Write(item);
+                            currentItem = "Durasteel"; // Temporary fix to the error in the above line
+
+                            if (itemsList[userChoice - 1].TryGetValue(currentItem, out currentPrice))
+                            {
+                                Console.Write("\nYou have selected " + currentItem + ", it costs " + currentPrice + " units per item.\nYou have " + newPlayer.money + " units.\n");
+                                currentAmount = console.GetInput("How much would you like to buy?");
+
+                                Int32.TryParse(currentPrice, out price);
+                                Int32.TryParse(currentAmount, out amount);
+                                total = price * amount;
+                            }
+                            else
+                            {
+                                Console.Write("The item you typed is not found.\n");
+                            }
 
                         }
-                        while (newPlayer.money < currentAmount * currentPrice);
+                        while (newPlayer.money < total);
+
+                        newPlayer.money = newPlayer.money - total;
+                        newPlayer.Inventory.Add(currentItem);
+                        newPlayer.Amount.Add(amount);
+                        console.Write("\nYou purchased " + amount + " " + currentItem + " at " + price + " for a total of " + total + " units. \nYou now have " + newPlayer.money + " units.\n");
                     }
                     else if (currentAction.ToLower() == "s")
                     {
@@ -198,16 +224,34 @@ namespace SpaceGame
                         // This should do for now though
                         console.Write("Thank you for playing!", textIndent: 5);
                         Environment.Exit(0);
-
                     } 
                     else
                     {
                         console.Write("Input not understood, please try again or press [X/x] to Quit", textIndent: 5);
                     }
                 }
-
                 timesTraveled++;
             }
+            
+            //End game scenarios based off money and random num
+            if (true)
+            {
+
+            }
+            else if (true)
+            {
+
+            }
+            else if (true)
+            {
+
+            }
+            else
+            {
+
+            }
+
+
 
             // End Game sequence... Need if statement to check if user has won
             console.Write("And thus he left...", pauseText: true, textIndent: 5);
