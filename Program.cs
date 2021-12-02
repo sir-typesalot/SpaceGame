@@ -156,16 +156,15 @@ namespace SpaceGame
                     {
                         CurrentPlanet.CheckCrystalMan();
                         CrystalManFound = CurrentPlanet.HasCrystalMan;
-                        spawnManDialog = CrystalManFound ? "\nYou hear a faint whisper, something about a crystal" : "The market is busy";
+                        spawnManDialog = CrystalManFound ? "\tYou hear a faint whisper, something about a crystal" : "The market is busy";
                         hasEnoughMoney = newPlayer.money > 4000 ? true : false;
                         
-                    }
-                        
+                    }  
                 }
-                
+          
                 while (currentAction != "p")
                 {
-                    if (!CrystalManFound)
+                    if (!CrystalManFound && !hasEnoughMoney)
                     {
                         currentAction = console.GetInput("Enter\n [Bb] - Buy\n [Ss] - Sell\n [Pp] - Travel to a new planet");
                         if (currentAction.ToLower() == "b")
@@ -187,7 +186,7 @@ namespace SpaceGame
                                 // Call util method to read file. set getItems to true to read from items.xml
                                 List<Dictionary<string, string>> itemsList = tools.ReadPlanetXMLFile("Planet", getItems: true);
 
-                                console.Write("\nEnter the name of the item you would like to buy. \nYou can't spend more money than you have. \nYou have " + newPlayer.money + " units.\n");
+                                console.Write("\n Enter the name of the item you would like to buy. or x to exit\n You can't spend more money than you have. \n You have " + newPlayer.money + " units.\n");
                                 // ItemsList[0] -> Argon
                                 foreach (var item in itemsList[userChoice - 1])
                                 {
@@ -208,8 +207,10 @@ namespace SpaceGame
                                     newPlayer.Inventory.Add(currentItem);
                                     newPlayer.Amount.Add(amount);
                                     console.Write("\nYou purchased " + amount + " " + currentItem + " at " + price + " for a total of " + bTotal + " units. \nYou now have " + newPlayer.money + " units.\n");
+                                } else if(currentItem == "x") {
+                                    break;
                                 }
-                                else Console.Write("The item you typed is not found.\n");
+                                else Console.Write("\tThe item you typed is not found.\n");
                             }
                             while (newPlayer.money < bTotal);
                         }
@@ -221,7 +222,7 @@ namespace SpaceGame
                             int sTotal = 0;
                             if (newPlayer.Inventory != null && newPlayer.Inventory.Count > 0)
                             {
-                                console.Write("Which item(s) do you want to sell?", textIndent: 5);
+                                console.Write("\tWhich item(s) do you want to sell?", textIndent: 5);
                                 for (int i = 0; i < newPlayer.Inventory.Count; i++)
                                 {
                                     console.Write($"{i} - {newPlayer.Inventory[i]}");
