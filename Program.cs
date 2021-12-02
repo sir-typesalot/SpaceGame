@@ -46,19 +46,19 @@ namespace SpaceGame
 
             // Story Intro
             // Should probably migrate this to a file?
-            console.Write("\nIn a galaxy far away, on the planet of Argon, a meteorite-iron trader "+ playerName + "\n" +
+            console.Write("\n\tIn a galaxy far away, on the planet of Argon, a meteorite-iron trader "+ playerName + "\n\t" +
                 "miscalculated their spacecraft’s entry to the planet’s belt and is now left with a wrecked"+
-                " ship.\nA ship is not that hard to recover from, if only it hadn’t been owned by the " +
-                "galaxy’s most feared\nship lender - Xabat. " + playerName + " knew they were in trouble. It was only" +
-                " a matter of time before Xabat\nheard of the news, 1 galactic day exactly. Once he did," +
-                " there was no escape. No place was safe\nfrom Xabat, for he had contacts and bounty" +
-                "hunters throughout the galaxy, on every planet, on\nevery outpost. A rumor was " +
-                "circulating that there was one thing that Xabat liked more than his\nships, supernova" +
-                " crystals, crystals that are found in the debris of an exploded star. "+ playerName + "\nheard of " +
+                " ship.\n\tA ship is not that hard to recover from, if only it hadn’t been owned by the " +
+                "galaxy’s most feared\n\tship lender - Xabat. " + playerName + " knew they were in trouble. It was only" +
+                " a matter of time before Xabat\n\theard of the news, 1 galactic day exactly. Once he did," +
+                " there was no escape. No place was safe\n\tfrom Xabat, for he had contacts and bounty" +
+                "hunters throughout the galaxy, on every planet, on\n\tevery outpost. A rumor was " +
+                "circulating that there was one thing that Xabat liked more than his\n\tships, supernova" +
+                " crystals, crystals that are found in the debris of an exploded star. "+ playerName + "\n\theard of " +
                 "these at one of the outposts on Argon’s moons. Apparently there was a dealer that could" +
-                "\nprocure some, but only to the highest bidders. Whatever the cost, "+ playerName + " knew they had" +
-                " no\noption, for their life was dependent on these crystals and they would have to do " +
-                "whatever it takes to\nget them, before it’s too late...\n");
+                "\n\tprocure some, but only to the highest bidders. Whatever the cost, "+ playerName + " knew they had" +
+                " no\n\toption, for their life was dependent on these crystals and they would have to do " +
+                "whatever it takes to\n\tget them, before it’s too late...\n");
 
             // Should we create a property in the Galaxy Class to handle this? - What do you guys think?
             int timesTraveled = 0;
@@ -78,19 +78,19 @@ namespace SpaceGame
                     CurrentPlanet.CheckCrystalMan();
                     galaxy.CurrentPlanet = CurrentPlanet.Name;
 
-                    console.Write("Current planet : " + CurrentPlanet.Name);
+                    console.Write("\tCurrent planet : " + CurrentPlanet.Name);
 
                     console.Write(story, textIndent: 3);
                 } 
                 else
                 {
                     //Pick a planet to travel to.
-                    console.Write(" Pick a planet to travel to");
+                    console.Write("\tPick a planet to travel to");
                     string planetRoster = "";
                     int planetNum = 1;
                     foreach (string planetName in galaxy.planetsInGalaxy.Keys)
                     {
-                        string planet = $"\n {planetNum} - {planetName}";
+                        string planet = $"\n\t {planetNum} - {planetName}";
                         planetRoster += planet;
                         planetNum++;
                     }
@@ -117,27 +117,27 @@ namespace SpaceGame
                     {
                         case 1:
                             CurrentPlanet = galaxy.planetsInGalaxy["Argon"];
-                            console.Write("\nCurrent planet : " + CurrentPlanet.Name);
+                            console.Write("\n\tCurrent planet : " + CurrentPlanet.Name);
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 2:
                             CurrentPlanet = galaxy.planetsInGalaxy["Plutonius"];
-                            console.Write("\nCurrent planet : " + CurrentPlanet.Name);
+                            console.Write("\n\tCurrent planet : " + CurrentPlanet.Name);
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 3:
                             CurrentPlanet = galaxy.planetsInGalaxy["Andromedian"];
-                            console.Write("\nCurrent planet : " + CurrentPlanet.Name);
+                            console.Write("\n\tCurrent planet : " + CurrentPlanet.Name);
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 4:
                             CurrentPlanet = galaxy.planetsInGalaxy["Zargos"];
-                            console.Write("\nCurrent planet : " + CurrentPlanet.Name);
+                            console.Write("\n\tCurrent planet : " + CurrentPlanet.Name);
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         case 5:
                             CurrentPlanet = galaxy.planetsInGalaxy["Novius"];
-                            console.Write("\nCurrent planet : " + CurrentPlanet.Name);
+                            console.Write("\n\tCurrent planet : " + CurrentPlanet.Name);
                             console.Write(CurrentPlanet.Story, textIndent: 3);
                             break;
                         default:
@@ -167,7 +167,7 @@ namespace SpaceGame
                             currentItem = "";
                             // Call util method to read file. set getItems to true to read from items.xml
                             List<Dictionary<string, string>> itemsList = tools.ReadPlanetXMLFile("Planet", getItems: true);
-                            // Need logic to interact with planet and trader on planet
+
                             console.Write("\nEnter the name of the item you would like to buy. \nYou can't spend more money than you have. \nYou have " + newPlayer.money + " units.\n");
                             // ItemsList[0] -> Argon
                             foreach (var item in itemsList[userChoice - 1])
@@ -175,8 +175,7 @@ namespace SpaceGame
                                 console.Write(item.Key + "\t\t" + item.Value);
                             }
 
-                            //currentItem = console.Write(item);
-                            currentItem = "Durasteel"; // Temporary fix to the error in the above line
+                            currentItem = console.GetInput("Item: ");
 
                             if (itemsList[userChoice - 1].TryGetValue(currentItem, out currentPrice))
                             {
@@ -214,9 +213,7 @@ namespace SpaceGame
                                 console.Write($"{i} - {newPlayer.Inventory[i]}");
                             }
 
-
-                            //console.GetInput(sellStr);
-                            sellStr = "0"; // Temporary fix to the error in the above line
+                            sellStr = console.GetInput("Item Number: ");
 
                             Int32.TryParse(sellStr, out int sellIndex);
 
