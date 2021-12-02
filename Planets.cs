@@ -35,17 +35,6 @@ namespace SpaceGame
         public string Name { get; set; }
         // Random Number Generator instance
         private readonly Random _random = new Random();
-
-    //I dont think we need any of this below
-        // List of the products and prices for the planet
-        // Need to figure out how to implement it for each planet - enums, maybe?
-        public List<string> productList = new List<string>();
-        // Climate property for planet object
-        // Not sure if this is needed, might remove later,
-        // Just thought it may be useful for the product list
-        public string Climate { get; set; }
-        // Heavily considering removing this
-        private int timeOnPlanet;
     }
 
     // Class that makes up the galaxy for the current Game

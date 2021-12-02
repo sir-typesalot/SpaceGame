@@ -11,6 +11,8 @@ namespace SpaceGame
             Galaxy galaxy = new Galaxy();
             Utils tools = new Utils();
 
+            bool CrystalManFound = false;
+
             console.Draw("Start_Game");
             console.Write("Welcome to the Game", pauseText:true, textIndent:5);
 
@@ -139,11 +141,21 @@ namespace SpaceGame
                             CurrentPlanet = galaxy.planetsInGalaxy["Novius"];
                             console.Write("\n\tCurrent planet : " + CurrentPlanet.Name);
                             console.Write(CurrentPlanet.Story, textIndent: 3);
+                            timesTraveled = 10;
                             break;
                         default:
                             console.Write(planetChoice.ToString());
                             break;
                     }
+                    if (timesTraveled == 10)
+                    {
+                        break;
+                    } else
+                    {
+                        CurrentPlanet.CheckCrystalMan();
+                        CrystalManFound = CurrentPlanet.HasCrystalMan;
+                    }
+                        
                 }
                 
                 while (currentAction != "p")
@@ -280,8 +292,11 @@ namespace SpaceGame
             }
             else if (newPlayer.hasCrystal)
             {
-                console.Write("You are arrested and brought before Xabat...", pauseText:true, textIndent:10);
-                console.Write("Just as the final judgement is about to be given, you raise your hand.");
+                console.Write("\tYou are arrested and brought before Xabat...", pauseText:true);
+                console.Write("\tJust as the final judgement is about to be given, you raise your hand.");
+                console.Write("\tXabat sees the crystal and the crowd gasps. He orders to release you");
+                console.Write("\tYou just escaped death, thanks to that crystal");
+                console.Write("You have won!", pauseText:true, textIndent:5);
             }
             else if (true)
             {
