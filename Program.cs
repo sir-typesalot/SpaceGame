@@ -44,8 +44,6 @@ namespace SpaceGame
             string playerName = console.GetInput("Enter a name for your player: ");
             Player newPlayer = new Player(playerName);
 
-            newPlayer.Inventory.Add("test");
-
             // Story Intro
             // Should probably migrate this to a file?
             console.Write("\nIn a galaxy far away, on the planet of Argon, a meteorite-iron trader "+ playerName + "\n" +
