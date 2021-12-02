@@ -24,8 +24,8 @@ namespace SpaceGame
         // Method to randomly check if Crystal Man can appear
         public void CheckCrystalMan()
         {
-            int rng = _random.Next(0, 1);
-            this.HasCrystalMan = rng == 1 ? true: false ;
+            int rng = _random.Next(0, 10);
+            this.HasCrystalMan = rng % 2 == 0 ? true: false ;
         }
         // Story Property to get and set story
         public string Story { get; set; }
@@ -33,15 +33,6 @@ namespace SpaceGame
         public bool HasCrystalMan { get; set; }
         // Name Property for the planet
         public string Name { get; set; }
-        // List of the products and prices for the planet
-        // Need to figure out how to implement it for each planet - enums, maybe?
-        public List<string> productList = new List<string>();
-        // Climate property for planet object
-        // Not sure if this is needed, might remove later,
-        // Just thought it may be useful for the product list
-        public string Climate { get; set; }
-        // Heavily considering removing this
-        private int timeOnPlanet;
         // Random Number Generator instance
         private readonly Random _random = new Random();
     }
@@ -54,10 +45,11 @@ namespace SpaceGame
          * Params:
          *  filaPath {string} the path to the file that holds the info for the planets
          */
-        public Galaxy(string filePath)
+        public Galaxy()
         {
             Utils tools = new Utils();
-            List<Dictionary<string,string>> planetsList = tools.ReadXMLFile(filePath, "Planet");
+            // Set getItems to false so it loads from the PlanetConfig file
+            List<Dictionary<string,string>> planetsList = tools.ReadPlanetXMLFile("Planet", getItems:false);
             foreach (Dictionary<string, string> planet in planetsList)
             {
                 this.planetsInGalaxy.Add(planet["name"], new Planet(planet["name"], planet["story"]));

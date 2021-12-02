@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<!--Prime sell order: Argon > Zargos > Novius > Andromedian > Plutonus > Argon....-->
+<!--Each planet has a produce, which can be bought at a lower price and a prime import, which is bought at a higher price.-->
+<!--Profit can be made by not finding the prime trades, but will struggle to win the game due to lack of money	.-->
+
+<root>
+	<Planet name="Argon">
+		<Durasteel value="135" />
+		<Crystalline value="330" />
+		<Carbonite value="180" />
+		<Leviathan value="190" />
+		<Nanochip value="210" />
+    </Planet>
+	
+    <Planet name="Plutonius">
+		<Durasteel value="190" />
+		<Crystalline value="140" />
+		<Carbonite value="310" />
+		<Leviathan value="210" />
+		<Nanochip value="180" />
+    </Planet>
+	
+    <Planet name="Andromedian">
+		<Durasteel value="210" />
+		<Crystalline value="180" />
+		<Carbonite value="145" />
+		<Leviathan value="190" />
+		<Nanochip value="320" />
+    </Planet>
+	
+    <Planet name="Zargos">
+		<Durasteel value="310" />
+		<Crystalline value="210" />
+		<Carbonite value="180" />
+		<Leviathan value="155" />
+		<Nanochip value="190" />
+    </Planet>
+	
+    <Planet name="Novius">
+		<Durasteel value="190" />
+		<Crystalline value="180" />
+		<Carbonite value="210" />
+		<Leviathan value="350" />
+		<Nanochip value="150" />
+    </Planet>
+</root>
