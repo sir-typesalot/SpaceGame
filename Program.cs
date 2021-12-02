@@ -12,6 +12,8 @@ namespace SpaceGame
             Utils tools = new Utils();
 
             bool CrystalManFound = false;
+            bool hasEnoughMoney = false;
+            string spawnManDialog = "";
 
             console.Draw("Start_Game");
             console.Write("Welcome to the Game", pauseText:true, textIndent:5);
@@ -154,167 +156,169 @@ namespace SpaceGame
                     {
                         CurrentPlanet.CheckCrystalMan();
                         CrystalManFound = CurrentPlanet.HasCrystalMan;
+                        spawnManDialog = CrystalManFound ? "\nYou hear a faint whisper, something about a crystal" : "The market is busy";
+                        hasEnoughMoney = newPlayer.money > 4000 ? true : false;
+                        
                     }
                         
                 }
                 
                 while (currentAction != "p")
                 {
-                    currentAction = console.GetInput("Enter\n [Bb] - Buy\n [Ss] - Sell\n [Pp] - Travel to a new planet");
-                    if (currentAction.ToLower() == "b")
+                    if (!CrystalManFound)
                     {
-                        int bTotal;
-                        int amount;
-                        string currentAmount;
-                        int price;
-                        string currentPrice;
-                        string currentItem;
-                        do
+                        currentAction = console.GetInput("Enter\n [Bb] - Buy\n [Ss] - Sell\n [Pp] - Travel to a new planet");
+                        if (currentAction.ToLower() == "b")
                         {
-                            bTotal = 0;
-                            amount = 0;
-                            currentAmount = "";
-                            price = 0;
-                            currentPrice = "";
-                            currentItem = "";
-                            // Call util method to read file. set getItems to true to read from items.xml
-                            List<Dictionary<string, string>> itemsList = tools.ReadPlanetXMLFile("Planet", getItems: true);
-
-                            console.Write("\nEnter the name of the item you would like to buy. \nYou can't spend more money than you have. \nYou have " + newPlayer.money + " units.\n");
-                            // ItemsList[0] -> Argon
-                            foreach (var item in itemsList[userChoice - 1])
+                            int bTotal;
+                            int amount;
+                            string currentAmount;
+                            int price;
+                            string currentPrice;
+                            string currentItem;
+                            do
                             {
-                                console.Write(item.Key + "\t\t" + item.Value);
+                                bTotal = 0;
+                                amount = 0;
+                                currentAmount = "";
+                                price = 0;
+                                currentPrice = "";
+                                currentItem = "";
+                                // Call util method to read file. set getItems to true to read from items.xml
+                                List<Dictionary<string, string>> itemsList = tools.ReadPlanetXMLFile("Planet", getItems: true);
+
+                                console.Write("\nEnter the name of the item you would like to buy. \nYou can't spend more money than you have. \nYou have " + newPlayer.money + " units.\n");
+                                // ItemsList[0] -> Argon
+                                foreach (var item in itemsList[userChoice - 1])
+                                {
+                                    console.Write(item.Key + "\t\t" + item.Value);
+                                }
+
+                                currentItem = console.GetInput("Item: ");
+
+                                if (itemsList[userChoice - 1].TryGetValue(currentItem, out currentPrice))
+                                {
+                                    Console.Write("\nYou have selected " + currentItem + ", it costs " + currentPrice + " units per item.\nYou have " + newPlayer.money + " units.\n");
+                                    currentAmount = console.GetInput("How much would you like to buy?");
+
+                                    Int32.TryParse(currentPrice, out price);
+                                    Int32.TryParse(currentAmount, out amount);
+                                    bTotal = price * amount;
+                                    newPlayer.money -= bTotal;
+                                    newPlayer.Inventory.Add(currentItem);
+                                    newPlayer.Amount.Add(amount);
+                                    console.Write("\nYou purchased " + amount + " " + currentItem + " at " + price + " for a total of " + bTotal + " units. \nYou now have " + newPlayer.money + " units.\n");
+                                }
+                                else Console.Write("The item you typed is not found.\n");
                             }
-
-                            currentItem = console.GetInput("Item: ");
-
-                            if (itemsList[userChoice - 1].TryGetValue(currentItem, out currentPrice))
-                            {
-                                Console.Write("\nYou have selected " + currentItem + ", it costs " + currentPrice + " units per item.\nYou have " + newPlayer.money + " units.\n");
-                                currentAmount = console.GetInput("How much would you like to buy?");
-
-                                Int32.TryParse(currentPrice, out price);
-                                Int32.TryParse(currentAmount, out amount);
-                                bTotal = price * amount;
-                            }
-                            else
-                            {
-                                Console.Write("The item you typed is not found.\n");
-                            }
-
+                            while (newPlayer.money < bTotal);
                         }
-                        while (newPlayer.money < bTotal);
-
-                        newPlayer.money -= bTotal;
-                        newPlayer.Inventory.Add(currentItem);
-                        newPlayer.Amount.Add(amount);
-                        console.Write("\nYou purchased " + amount + " " + currentItem + " at " + price + " for a total of " + bTotal + " units. \nYou now have " + newPlayer.money + " units.\n");
-                    }
-                    else if (currentAction.ToLower() == "s")
-                    {
-                        string sellStr = "";
-                        string sellPrice = "";
-                        int price = 0;
-                        int sTotal = 0;
-                        if (newPlayer.Inventory != null && newPlayer.Inventory.Count > 0)
+                        else if (currentAction.ToLower() == "s")
                         {
-                            console.Write("Which item(s) do you want to sell?", textIndent:5);
-                            for (int i=0; i < newPlayer.Inventory.Count; i++)
+                            string sellStr = "";
+                            string sellPrice = "";
+                            int price = 0;
+                            int sTotal = 0;
+                            if (newPlayer.Inventory != null && newPlayer.Inventory.Count > 0)
                             {
-                                console.Write($"{i} - {newPlayer.Inventory[i]}");
+                                console.Write("Which item(s) do you want to sell?", textIndent: 5);
+                                for (int i = 0; i < newPlayer.Inventory.Count; i++)
+                                {
+                                    console.Write($"{i} - {newPlayer.Inventory[i]}");
+                                }
+
+                                sellStr = console.GetInput("Item Number: ");
+
+                                Int32.TryParse(sellStr, out int sellIndex);
+
+                                console.Write("You have " + newPlayer.Amount[sellIndex] + " " + newPlayer.Inventory[sellIndex]);
+
+                                string amountSell = console.GetInput("How much would you like to sell?");
+                                Int32.TryParse(amountSell, out int sellInt);
+
+                                // Call util method to read file. set getItems to true to read from items.xml
+                                List<Dictionary<string, string>> itemsList = tools.ReadPlanetXMLFile("Planet", getItems: true);
+
+                                // Getting price of item
+                                itemsList[userChoice - 1].TryGetValue(newPlayer.Inventory[sellIndex], out sellPrice);
+                                Int32.TryParse(sellPrice, out price);
+                                sTotal = price * sellInt;
+                                if (sellInt == newPlayer.Amount[sellIndex])
+                                {
+                                    newPlayer.Inventory.RemoveAt(sellIndex);
+                                    newPlayer.Amount.RemoveAt(sellIndex);
+
+                                    newPlayer.money += sTotal;
+
+                                    console.Write("You now have " + newPlayer.money + " units.\n");
+                                }
+                                else if (sellInt < newPlayer.Amount[sellIndex])
+                                {
+                                    newPlayer.Amount[sellIndex] -= sellInt;
+                                    newPlayer.money += sTotal;
+
+                                    console.Write("You now have " + newPlayer.money + " units.\n");
+                                }
+                                else console.Write("Please select a valid amount to sell");
                             }
-
-                            sellStr = console.GetInput("Item Number: ");
-
-                            Int32.TryParse(sellStr, out int sellIndex);
-
-                            console.Write("You have " + newPlayer.Amount[sellIndex] + " " + newPlayer.Inventory[sellIndex]);
-
-                            string amountSell = console.GetInput("How much would you like to sell?");
-                            Int32.TryParse(amountSell, out int sellInt);
-
-                            // Call util method to read file. set getItems to true to read from items.xml
-                            List<Dictionary<string, string>> itemsList = tools.ReadPlanetXMLFile("Planet", getItems: true);
-                            
-                            // Getting price of item
-                            itemsList[userChoice - 1].TryGetValue(newPlayer.Inventory[sellIndex], out sellPrice);
-                            Int32.TryParse(sellPrice, out price);
-                            sTotal = price * sellInt;
-                            if (sellInt == newPlayer.Amount[sellIndex])
-                            {
-                                newPlayer.Inventory.RemoveAt(sellIndex);
-                                newPlayer.Amount.RemoveAt(sellIndex);
-
-                                newPlayer.money += sTotal;
-
-                                console.Write("You now have " + newPlayer.money + " units.\n");
-                            }
-                            else if (sellInt < newPlayer.Amount[sellIndex])
-                            {
-                                newPlayer.Amount[sellIndex] -= sellInt;
-                                newPlayer.money += sTotal;
-
-                                console.Write("You now have " + newPlayer.money + " units.\n");
-                            }
-                            else
-                            {
-                                console.Write("Please select a valid amount to sell");
-                            }
+                            else console.Write("You don't have anything to sell! Try getting some items..");
+                        }
+                        else if (currentAction.ToLower() == "x")
+                        {
+                            // We can implement logic that will confirm if the user wants to quit
+                            // This should do for now though
+                            console.Write("Thank you for playing!", textIndent: 5);
+                            Environment.Exit(0);
                         }
                         else
                         {
-                            console.Write("You don't have anything to sell! Try getting some items..");
+                            console.Write("Input not understood, please try again or press [X/x] to Quit", textIndent: 5);
                         }
-                    } 
-                    else if (currentAction.ToLower() == "x")
+                    } else
                     {
-                        // We can implement logic that will confirm if the user wants to quit
-                        // This should do for now though
-                        console.Write("Thank you for playing!", textIndent: 5);
-                        Environment.Exit(0);
-                    } 
-                    else
-                    {
-                        console.Write("Input not understood, please try again or press [X/x] to Quit", textIndent: 5);
+                        console.Write(spawnManDialog);
+                        console.Write("\tYou are led down a dimly lit alley way and are met with a dwarf-sized merchant");
+                        console.Write("\t'I presume you are looking for the crystal' he says");
+                        console.Write("\tHe looks at your purse and nods - 'That will do' he says");
+                        string userchoice = console.GetInput("Press [B/b] to buy the crystal");
+                        if (userchoice.ToLower() == "b")
+                        {
+                            int bTotal = 4000 * 1;
+                            newPlayer.money -= bTotal;
+                            newPlayer.Inventory.Add("Crystal");
+                            newPlayer.Amount.Add(1);
+                            console.Write("\nYou purchased " + 1 + " Crystal at " + 4000 + " for a total of " + bTotal + " units. \nYou now have " + newPlayer.money + " units.\n");
+                            newPlayer.hasCrystal = true;
+                        }
+                        timesTraveled = 10;
+                        break;
+
                     }
+                    
                 }
                 timesTraveled++;
             }
-            
-            //End game scenarios based off money and random num
+
+            //End game scenarios based off money and random num  && notEnoughMoney
             if (timesTraveled >= 9 && newPlayer.hasCrystal == false)
             {
                 console.Write("ALERT! ALERT! Xabat's spies have found you! There is nowhere for you to hide....", textIndent:10);
                 console.Write("You lost. You didn't give the crystals to Xabat in time!", pauseText:true, textIndent:10);
-                console.GetInput("Press any key to exit");
-                Environment.Exit(0);
             }
             else if (newPlayer.hasCrystal)
             {
                 console.Write("\tYou are arrested and brought before Xabat...", pauseText:true);
-                console.Write("\tJust as the final judgement is about to be given, you raise your hand.");
-                console.Write("\tXabat sees the crystal and the crowd gasps. He orders to release you");
-                console.Write("\tYou just escaped death, thanks to that crystal");
+                console.Write("\n\tJust as the final judgement is about to be given, you raise your hand.");
+                console.Write("\n\tXabat sees the crystal and the crowd gasps. He orders to release you");
+                console.Write("\n\tYou just escaped death, thanks to that crystal");
                 console.Write("You have won!", pauseText:true, textIndent:5);
             }
-            else if (true)
-            {
-
-            }
-            else
-            {
-
-            }
-
-
-
             // End Game sequence... Need if statement to check if user has won
-            console.Write("And thus he left...", pauseText: true, textIndent: 5);
+            console.Write("And thus it ends...", pauseText: true, textIndent: 5);
 
             console.Draw("End_Game");
-            // test
-
+            console.GetInput("Press any key to exit");
+            Environment.Exit(0);
         }
     }
 }

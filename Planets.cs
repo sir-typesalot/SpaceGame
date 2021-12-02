@@ -24,8 +24,8 @@ namespace SpaceGame
         // Method to randomly check if Crystal Man can appear
         public void CheckCrystalMan()
         {
-            int rng = _random.Next(0, 1);
-            this.HasCrystalMan = rng == 1 ? true: false ;
+            int rng = _random.Next(0, 10);
+            this.HasCrystalMan = rng % 2 == 0 ? true: false ;
         }
         // Story Property to get and set story
         public string Story { get; set; }
