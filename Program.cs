@@ -222,7 +222,6 @@ namespace SpaceGame
                             string amountSell = console.GetInput("How much would you like to sell?");
                             Int32.TryParse(amountSell, out int sellInt);
 
-
                             // Call util method to read file. set getItems to true to read from items.xml
                             List<Dictionary<string, string>> itemsList = tools.ReadPlanetXMLFile("Planet", getItems: true);
                             
@@ -255,7 +254,6 @@ namespace SpaceGame
                         {
                             console.Write("You don't have anything to sell! Try getting some items..");
                         }
-
                     } 
                     else if (currentAction.ToLower() == "x")
                     {
@@ -273,13 +271,17 @@ namespace SpaceGame
             }
             
             //End game scenarios based off money and random num
-            if (true)
+            if (timesTraveled >= 9 && newPlayer.hasCrystal == false)
             {
-
+                console.Write("ALERT! ALERT! Xabat's spies have found you! There is nowhere for you to hide....", textIndent:10);
+                console.Write("You lost. You didn't give the crystals to Xabat in time!", pauseText:true, textIndent:10);
+                console.GetInput("Press any key to exit");
+                Environment.Exit(0);
             }
-            else if (true)
+            else if (newPlayer.hasCrystal)
             {
-
+                console.Write("You are arrested and brought before Xabat...", pauseText:true, textIndent:10);
+                console.Write("Just as the final judgement is about to be given, you raise your hand.");
             }
             else if (true)
             {
