@@ -151,7 +151,7 @@ namespace SpaceGame
                     currentAction = console.GetInput("Enter\n [Bb] - Buy\n [Ss] - Sell\n [Pp] - Travel to a new planet");
                     if (currentAction.ToLower() == "b")
                     {
-                        int total;
+                        int bTotal;
                         int amount;
                         string currentAmount;
                         int price;
@@ -159,7 +159,7 @@ namespace SpaceGame
                         string currentItem;
                         do
                         {
-                            total = 0;
+                            bTotal = 0;
                             amount = 0;
                             currentAmount = "";
                             price = 0;
@@ -185,7 +185,7 @@ namespace SpaceGame
 
                                 Int32.TryParse(currentPrice, out price);
                                 Int32.TryParse(currentAmount, out amount);
-                                total = price * amount;
+                                bTotal = price * amount;
                             }
                             else
                             {
@@ -193,31 +193,70 @@ namespace SpaceGame
                             }
 
                         }
-                        while (newPlayer.money < total);
+                        while (newPlayer.money < bTotal);
 
-                        newPlayer.money = newPlayer.money - total;
+                        newPlayer.money -= bTotal;
                         newPlayer.Inventory.Add(currentItem);
                         newPlayer.Amount.Add(amount);
-                        console.Write("\nYou purchased " + amount + " " + currentItem + " at " + price + " for a total of " + total + " units. \nYou now have " + newPlayer.money + " units.\n");
+                        console.Write("\nYou purchased " + amount + " " + currentItem + " at " + price + " for a total of " + bTotal + " units. \nYou now have " + newPlayer.money + " units.\n");
                     }
                     else if (currentAction.ToLower() == "s")
                     {
+                        string sellStr = "";
+                        string sellPrice = "";
+                        int price = 0;
+                        int sTotal = 0;
                         if (newPlayer.Inventory != null && newPlayer.Inventory.Count > 0)
                         {
                             console.Write("Which item(s) do you want to sell?", textIndent:5);
-                            for (int i=1; i < newPlayer.Inventory.Count; i++)
+                            for (int i=0; i < newPlayer.Inventory.Count; i++)
                             {
                                 console.Write($"{i} - {newPlayer.Inventory[i]}");
                             }
 
 
+                            //console.GetInput(sellStr);
+                            sellStr = "0"; // Temporary fix to the error in the above line
+
+                            Int32.TryParse(sellStr, out int sellIndex);
+
+                            console.Write("You have " + newPlayer.Amount[sellIndex] + " " + newPlayer.Inventory[sellIndex]);
+
+                            string amountSell = console.GetInput("How much would you like to sell?");
+                            Int32.TryParse(amountSell, out int sellInt);
 
 
+                            // Call util method to read file. set getItems to true to read from items.xml
+                            List<Dictionary<string, string>> itemsList = tools.ReadPlanetXMLFile("Planet", getItems: true);
+                            
+                            // Getting price of item
+                            itemsList[userChoice - 1].TryGetValue(newPlayer.Inventory[sellIndex], out sellPrice);
+                            Int32.TryParse(sellPrice, out price);
+                            sTotal = price * sellInt;
+                            if (sellInt == newPlayer.Amount[sellIndex])
+                            {
+                                newPlayer.Inventory.RemoveAt(sellIndex);
+                                newPlayer.Amount.RemoveAt(sellIndex);
 
-                        } 
+                                newPlayer.money += sTotal;
+
+                                console.Write("You now have " + newPlayer.money + " units.\n");
+                            }
+                            else if (sellInt < newPlayer.Amount[sellIndex])
+                            {
+                                newPlayer.Amount[sellIndex] -= sellInt;
+                                newPlayer.money += sTotal;
+
+                                console.Write("You now have " + newPlayer.money + " units.\n");
+                            }
+                            else
+                            {
+                                console.Write("Please select a valid amount to sell");
+                            }
+                        }
                         else
                         {
-                            console.Write("You don't have aything to sell! Try getting some items..");
+                            console.Write("You don't have anything to sell! Try getting some items..");
                         }
 
                     } 
