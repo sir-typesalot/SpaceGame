@@ -156,6 +156,7 @@ namespace SpaceGame
                     {
                         CurrentPlanet.CheckCrystalMan();
                         CrystalManFound = CurrentPlanet.HasCrystalMan;
+
                         spawnManDialog = CrystalManFound ? "\tYou hear a faint whisper, something about a crystal" : "The market is busy";
                         hasEnoughMoney = newPlayer.money > 4000 ? true : false;
                         
@@ -193,8 +194,9 @@ namespace SpaceGame
                                     console.Write(item.Key + "\t\t" + item.Value);
                                 }
 
-                                currentItem = console.GetInput("Item: ");
 
+                                currentItem = console.GetInput("Item: ");
+                              
                                 if (itemsList[userChoice - 1].TryGetValue(currentItem, out currentPrice))
                                 {
                                     Console.Write("\nYou have selected " + currentItem + ", it costs " + currentPrice + " units per item.\nYou have " + newPlayer.money + " units.\n");
@@ -207,10 +209,12 @@ namespace SpaceGame
                                     newPlayer.Inventory.Add(currentItem);
                                     newPlayer.Amount.Add(amount);
                                     console.Write("\nYou purchased " + amount + " " + currentItem + " at " + price + " for a total of " + bTotal + " units. \nYou now have " + newPlayer.money + " units.\n");
+
                                 } else if(currentItem == "x") {
                                     break;
                                 }
                                 else Console.Write("\tThe item you typed is not found.\n");
+                                }
                             }
                             while (newPlayer.money < bTotal);
                         }
@@ -221,8 +225,9 @@ namespace SpaceGame
                             int price = 0;
                             int sTotal = 0;
                             if (newPlayer.Inventory != null && newPlayer.Inventory.Count > 0)
-                            {
+
                                 console.Write("\tWhich item(s) do you want to sell?", textIndent: 5);
+                              
                                 for (int i = 0; i < newPlayer.Inventory.Count; i++)
                                 {
                                     console.Write($"{i} - {newPlayer.Inventory[i]}");
